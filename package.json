@@ -1,0 +1,23 @@
+{
+  "name": "fgjs",
+  "version": "1.0.0",
+  "description": "js for FogCloud",
+  "main": "fgjs.js",
+  "scripts": {
+    "test": "var a=require(\"fgjs\");a.init(\"Rocke\")"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/bringmehome/fgjs.git"
+  },
+  "keywords": [
+    "fog",
+    "mico"
+  ],
+  "author": "Rocke",
+  "license": "BSD-2-Clause",
+  "bugs": {
+    "url": "https://github.com/bringmehome/fgjs/issues"
+  },
+  "homepage": "https://github.com/bringmehome/fgjs#readme"
+}
