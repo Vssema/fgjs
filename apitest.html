@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+	<title>title</title>
+	<script type="text/javascript" src="./FG-0.0.1.min.js"></script>
+	<style>
+		body {
+			font-size: 15px;
+			color: green;
+			font-family: '黑体';
+		}
+	</style>
+</head>
+<body>
+	<br/>
+	<br/>
+	<input class="ipbutton" type="button" onclick="ajaxtest()" value="测试"/>
+	<br/>
+</body>
+<script type="text/javascript">
+	function ajaxtest(){
+		alert("ajax");
+		var token = "6fae5b98-bdc6-4bee-aa6b-b496433acfc8";
+		var appid = "0edfd64c-0f9a-4472-a8bc-b06b75c3909a";
+		FG.init(appid, token);
+		// FG.device_devices().then(function(ret){
+		// 	console.log("success");
+		// 	console.log(JSON.stringify(ret));
+		// },function(err){
+		// 	console.log("err");
+		// 	console.log(err);
+		// });	
+		
+		var par = {"login_id":"18612094117","password":"123456"};
+		FG.user_login(par).then(function(ret){
+			console.log("success");
+			console.log(JSON.stringify(ret));
+		},function(err){
+			console.log("err");
+			console.log(err);
+		});
+}
+</script>
+</html>
