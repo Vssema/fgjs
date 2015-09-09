@@ -25,22 +25,37 @@
 		var token = "6fae5b98-bdc6-4bee-aa6b-b496433acfc8";
 		var appid = "0edfd64c-0f9a-4472-a8bc-b06b75c3909a";
 		FG.init(appid, token);
-		// FG.device_devices().then(function(ret){
-		// 	console.log("success");
-		// 	console.log(JSON.stringify(ret));
-		// },function(err){
-		// 	console.log("err");
-		// 	console.log(err);
-		// });	
-		
+		FG.deviceDevices().then(function(ret){
+			console.log("success");
+			console.log(JSON.stringify(ret));
+		},function(err){
+			console.log("err");
+			console.log(err);
+		});	
+
 		var par = {"login_id":"18612094117","password":"123456"};
-		FG.user_login(par).then(function(ret){
+		FG.userLogin(par).then(function(ret){
 			console.log("success");
 			console.log(JSON.stringify(ret));
 		},function(err){
 			console.log("err");
 			console.log(err);
 		});
-}
+	}
+
+// var baz; 
+// (function() { 
+// 	var foo = 10; 
+// 	var bar = 2; 
+// 	baz = function() { 
+// 		return foo * bar; 
+// 	}; 
+// })(); 
+// baz(); 
+
+// alert((function(x,y){
+// 	return x*y;
+// })(3,4));
+
 </script>
 </html>

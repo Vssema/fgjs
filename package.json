@@ -1,6 +1,6 @@
 {
   "name": "fgjs",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "js for FogCloud",
   "main": "fgjs.js",
   "scripts": {
@@ -19,5 +19,8 @@
   "bugs": {
     "url": "https://github.com/bringmehome/fgjs/issues"
   },
-  "homepage": "https://github.com/bringmehome/fgjs#readme"
+  "homepage": "https://github.com/bringmehome/fgjs#readme",
+   "dependencies": {
+     "promise": "7.0.4"
+   }
 }
