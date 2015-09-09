@@ -21,20 +21,66 @@
 </body>
 <script type="text/javascript">
 	function ajaxtest(){
-		alert("ajax");
-		var token = "6fae5b98-bdc6-4bee-aa6b-b496433acfc8";
+		var token = "2945e7af-3508-40ed-a574-f3c6e6308bf4";
 		var appid = "0edfd64c-0f9a-4472-a8bc-b06b75c3909a";
-		FG.init(appid, token);
-		FG.deviceDevices().then(function(ret){
+		var appSecret = "63b9c58fe0bd9fa397c205bdd4eb6db1";
+
+		FG.init(appid, token, appSecret);
+
+		// FG.devicesGet().then(function(ret){
+		// 	console.log("success");
+		// 	console.log(JSON.stringify(ret));
+		// },function(err){
+		// 	console.log("err");
+		// 	console.log(err);
+		// });	
+
+		// var par = {"username":"18612094117","password":"123456"};
+		// FG.usersLogin(par).then(function(ret){
+		// 	console.log("success");
+		// 	console.log(JSON.stringify(ret));
+		// },function(err){
+		// 	console.log("err");
+		// 	console.log(err);
+		// });
+
+		var par = {"device_id":"d64f517c/c8934691813c","product_id":"d64f517c","MAC":"c8934691813c"};
+		FG.devicesUsers(par).then(function(ret){
 			console.log("success");
 			console.log(JSON.stringify(ret));
 		},function(err){
 			console.log("err");
 			console.log(err);
-		});	
+		});
 
-		var par = {"login_id":"18612094117","password":"123456"};
-		FG.userLogin(par).then(function(ret){
+		// FG.usersTokens().then(function(ret){
+		// 	console.log("success");
+		// 	console.log(JSON.stringify(ret));
+		// },function(err){
+		// 	console.log("err");
+		// 	console.log(err);
+		// });
+
+		// var par = {"device_id":"d64f517c/c8934691813c","alias":"我的设备"};
+		// FG.devicesModify(par).then(function(ret){
+		// 	console.log("success");
+		// 	console.log(JSON.stringify(ret));
+		// },function(err){
+		// 	console.log("err");
+		// 	console.log(err);
+		// });
+
+		// var par = {"device_id":"d64f517c/c8934691813c","alias":"我的设备"};
+		// FG.authorizationDevices().then(function(ret){
+		// 	console.log("success");
+		// 	console.log(JSON.stringify(ret));
+		// },function(err){
+		// 	console.log("err");
+		// 	console.log(err);
+		// });
+
+		var par = {"username":"micoapp@qq.com","owner_type":"owner","device_id":"d64f517c/c8934691813c"};
+		FG.authorizationDevicesManage(par).then(function(ret){
 			console.log("success");
 			console.log(JSON.stringify(ret));
 		},function(err){

@@ -4,27 +4,64 @@
 */
 'use strict';
 var Promise = require("promise");
+var md5 = require("md5");
 var FG = exports = {};
 // const API_ROOT = "http://www.easylink.io/v1/";
-var _userToken, _appId;
+var _userToken, _appId, _appSecret;
 
-//init user information
-FG.init = function(appId, userToken) {
-	_userToken = userToken;
-	_appId = appId;
+var end_point = "http://www.easylink.io/v2/";
+// console.log(md5('message'));
+var urls = {
+    "users/info" : "get",
+    "users/tokens" : "get",
+    "users" : "post",
+    "users/device/unbind" : "post",
+    "users/email_verification_code" : "post",
+    "users/login" : "post",
+    "users/password/reset" : "post",
+    "users/sms_verification_code" : "post",
+    "users/info" : "put",
+    "users/password" : "put",
+
+    "devices/get" : "get",
+    "devices/users" : "get",
+    "devices/modify" : "put",
+    "devices/users" : "delete",//设备解绑某个用户 有问题
+    "devices/users" : "delete",//设备解绑某个用户 有问题
+    
+    "authorization/devices" : "get",
+    "authorization/devices/manage" : "post",
 }
 
-var end_point = "http://www.easylink.io/v1/";
+//if the method is get change data to url
+var _eachData = function(data){
+    var geturl = "";
+    for(var key in data){
+        geturl += key +"="+ data[key] +"&";
+    }
+    // console.log(geturl);
+    return geturl;
+};
 
 //the function of ajax
 var _ajax = function(method, url, data) {
+    var timestamp = Date.parse(new Date());
+    // console.log(timestamp);
+    console.log(md5(_appSecret+timestamp)+","+timestamp);
     var p = new Promise(function (resolve, reject) {
         var xhr = new XMLHttpRequest();
+        if("get" == method){
+            url = url+"?"+_eachData(data);
+        }else if("delete" == method){
+            url = url+"?"+_eachData(data);
+        }
+        console.log(url);
         xhr.open(method, url, true);
         xhr.setRequestHeader("Content-Type", "application/json"); 
         xhr.setRequestHeader("X-Application-Id", _appId); 
         xhr.setRequestHeader("Authorization", "token " + _userToken); 
-        xhr.send(data);
+        xhr.setRequestHeader("X-Request-Sign", md5(_appSecret+timestamp)+","+timestamp); 
+        xhr.send(JSON.stringify(data));
         xhr.onreadystatechange = function() {
             if (xhr.readyState == 4) {
                 if (xhr.status >= 200 && xhr.status < 300) {
@@ -47,22 +84,33 @@ var _changeName = function(name){
     var namelist = name.split("");
     var xxzm = namelist[(name.indexOf("/"))+1];
     var dxzm = xxzm.toUpperCase();
-    return name.replace("/"+xxzm, dxzm);
+
+    var finalName = name.replace("/"+xxzm, dxzm);
+
+
+    if(finalName.indexOf("/") > 0){
+        // console.log(finalName.indexOf("/")+ " "+finalName);
+        return _changeName(finalName);
+    }else{
+        // console.log(finalName.indexOf("/")+ " "+finalName);
+        return finalName;
+    }
 };
 
-var urls = {
-    // "device/devices" : "post",
-    // "device/devices" : "post",
-    "device/devices" : "post",
-    "user/login" : "post"
+//init user information
+FG.init = function(appId, userToken, appSecret) {
+	_userToken = userToken;
+    _appId = appId;
+	_appSecret = appSecret;
 }
 
 //make anonymous functions
 for(var k in urls) {
     var fk = _changeName(k);
+    // console.log("for = "+fk);
     FG[fk] = (function (url, method) {
       return function (param) {
-        return _ajax(method, end_point+url, JSON.stringify(param));
+        return _ajax(method, end_point+url, param);
         }
     })(k, urls[k]);
 }
