@@ -16,34 +16,66 @@
 <body>
 	<br/>
 	<br/>
-	<input class="ipbutton" type="button" onclick="ajaxtest()" value="测试"/>
+	<input class="ipbutton" type="button" onclick="login()" value="登录"/>
 	<br/>
+	<br/>
+	<input class="ipbutton" type="button" onclick="getDeviceList()" value="获取设备列表"/>
+	<br/>
+	<br/>
+	<input class="ipbutton" type="button" onclick="devicesUsers()" value="设备的用户"/>	
+	<br/>
+	<br/>
+	<input class="ipbutton" type="button" onclick="devicesModify()" value="修改设备名称"/>
+	<br/>
+	<br/>
+	<input class="ipbutton" type="button" onclick="authorizationDevicesManage()" value="授权设备给别人"/>
+	<br/>
+	<br/>
+	<input class="ipbutton" type="button" onclick="authorizationDevices()" value="查询可以授权的设备"/>
+	<br/>
+	<br/>
+	<input class="ipbutton" type="button" onclick="usersTokens()" value="获取用户的各种信息"/>
+	<br/>
+	<br/>
+	<input class="ipbutton" type="button" onclick="usersDeviceUnbind()" value="解绑设备"/>
 </body>
 <script type="text/javascript">
-	function ajaxtest(){
-		var token = "2945e7af-3508-40ed-a574-f3c6e6308bf4";
-		var appid = "0edfd64c-0f9a-4472-a8bc-b06b75c3909a";
-		var appSecret = "63b9c58fe0bd9fa397c205bdd4eb6db1";
 
-		FG.init(appid, token, appSecret);
+	var userToken = "";
+	var userID = "";
+	var appid = "0edfd64c-0f9a-4472-a8bc-b06b75c3909a";
+	var appSecret = "63b9c58fe0bd9fa397c205bdd4eb6db1";
 
-		// FG.devicesGet().then(function(ret){
-		// 	console.log("success");
-		// 	console.log(JSON.stringify(ret));
-		// },function(err){
-		// 	console.log("err");
-		// 	console.log(err);
-		// });	
+	(function(window){
+		// var version = "v1";
+		// FG.init(appid, appSecret, version);
+		
+		FG.init(appid, appSecret);
+	})(window);
 
-		// var par = {"username":"18612094117","password":"123456"};
-		// FG.usersLogin(par).then(function(ret){
-		// 	console.log("success");
-		// 	console.log(JSON.stringify(ret));
-		// },function(err){
-		// 	console.log("err");
-		// 	console.log(err);
-		// });
+	function getDeviceList(){
+		// FG.deviceDevices().then(function(ret){//v1
+		FG.devicesGet().then(function(ret){ //v2
+			console.log("success");
+			console.log(JSON.stringify(ret));
+		},function(err){
+			console.log("err");
+			console.log(err);
+		});	
+	}
 
+	function usersDeviceUnbind(){
+		var par = {"device_id":"d64f517c/c8934691813c"};
+		FG.usersDeviceUnbind(par).then(function(ret){
+			console.log("success");
+			console.log(JSON.stringify(ret));
+		},function(err){
+			console.log("err");
+			console.log(err);
+		});	
+	}
+
+	function devicesUsers(){
 		var par = {"device_id":"d64f517c/c8934691813c","product_id":"d64f517c","MAC":"c8934691813c"};
 		FG.devicesUsers(par).then(function(ret){
 			console.log("success");
@@ -52,35 +84,12 @@
 			console.log("err");
 			console.log(err);
 		});
+	}
 
-		// FG.usersTokens().then(function(ret){
-		// 	console.log("success");
-		// 	console.log(JSON.stringify(ret));
-		// },function(err){
-		// 	console.log("err");
-		// 	console.log(err);
-		// });
-
-		// var par = {"device_id":"d64f517c/c8934691813c","alias":"我的设备"};
-		// FG.devicesModify(par).then(function(ret){
-		// 	console.log("success");
-		// 	console.log(JSON.stringify(ret));
-		// },function(err){
-		// 	console.log("err");
-		// 	console.log(err);
-		// });
-
-		// var par = {"device_id":"d64f517c/c8934691813c","alias":"我的设备"};
-		// FG.authorizationDevices().then(function(ret){
-		// 	console.log("success");
-		// 	console.log(JSON.stringify(ret));
-		// },function(err){
-		// 	console.log("err");
-		// 	console.log(err);
-		// });
-
-		var par = {"username":"micoapp@qq.com","owner_type":"owner","device_id":"d64f517c/c8934691813c"};
-		FG.authorizationDevicesManage(par).then(function(ret){
+	function devicesModify(){
+		var par = {"device_id":"d64f517c/c8934691813c","alias":"MY地设备"};
+		// FG.deviceModify(par).then(function(ret){//v1
+		FG.devicesModify(par).then(function(ret){//v2
 			console.log("success");
 			console.log(JSON.stringify(ret));
 		},function(err){
@@ -89,19 +98,48 @@
 		});
 	}
 
-// var baz; 
-// (function() { 
-// 	var foo = 10; 
-// 	var bar = 2; 
-// 	baz = function() { 
-// 		return foo * bar; 
-// 	}; 
-// })(); 
-// baz(); 
+	function login(){
+		// var par = {"login_id":"13524467545","password":"123456"};//v1
+		var par = {"username":"13524467545","password":"123456"};//v2
+		FG.login(par).then(function(ret){
+			console.log("ret");
+			console.log(ret);
+	    },function(err){
+			console.log("err");
+			console.log(err);
+	    });
+	}
 
-// alert((function(x,y){
-// 	return x*y;
-// })(3,4));
+	function usersTokens(){
+		FG.usersTokens().then(function(ret){
+			console.log("success");
+			console.log(JSON.stringify(ret));
+		},function(err){
+			console.log("err");
+			console.log(err);
+		});
+	}
+
+	function authorizationDevices(){
+		FG.authorizationDevices().then(function(ret){
+			console.log("success");
+			console.log(JSON.stringify(ret));
+		},function(err){
+			console.log("err");
+			console.log(err);
+		});
+	}
+
+	function authorizationDevicesManage(){
+			var par = {"username":"13524467545","owner_type":"owner","device_id":"d64f517c/c8934691813c"};
+			FG.authorizationDevicesManage(par).then(function(ret){
+				console.log("success");
+				console.log(JSON.stringify(ret));
+			},function(err){
+				console.log("err");
+				console.log(err);
+			});
+	}
 
 </script>
 </html>
