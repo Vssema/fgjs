@@ -2,6 +2,13 @@
 * FogCloud api by Rcoke 
 * 2015-09-08
 */
+/**
+遗留问题：
+1、login时候返回userid
+2、解绑某个用户
+3、解绑自己和设备的关系
+4、其他delete的接口
+*/
 'use strict';
 var Promise = require("promise");
 var md5 = require("md5");
