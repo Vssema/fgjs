@@ -82,7 +82,7 @@ var _eachData = function(data){
 var _ajax = function(method, url, data) {
     var timestamp = Date.parse(new Date());
     // console.log(timestamp);
-    console.log(md5(_appSecret+timestamp)+","+timestamp);
+    // console.log(md5(_appSecret+timestamp)+","+timestamp);
     var p = new Promise(function (resolve, reject) {
         var xhr = new XMLHttpRequest();
         if("get" == method){
@@ -91,7 +91,7 @@ var _ajax = function(method, url, data) {
             url = url+"?"+_eachData(data);
             //------------------------------------------------------check delete type
         }
-        console.log(url);
+        // console.log(url);
         xhr.open(method, url, true);
         xhr.setRequestHeader("Content-Type", "application/json"); 
         xhr.setRequestHeader("X-Application-Id", _appId); 
@@ -144,8 +144,8 @@ FG.init = function(appId, appSecret, version) {
     }
 
     //make anonymous functions
-    end_point =  end_point+_version+"/";
-    console.log(end_point);
+    var urlhead =  end_point+_version+"/";
+    // console.log(urlhead);
 
     var urllist;
     if("v1" == _version){
@@ -156,10 +156,10 @@ FG.init = function(appId, appSecret, version) {
 
     for(var k in urllist) {
         var fk = _changeName(k);
-        console.log("for = "+fk);
+        // console.log("for = "+fk);
         FG[fk] = (function (url, method) {
           return function (param) {
-            return _ajax(method, end_point+url, param);
+            return _ajax(method, urlhead+url, param);
           }
         })(k, urllist[k]);
     }
