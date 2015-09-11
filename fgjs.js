@@ -48,7 +48,7 @@ var urls1 = {
 };
 
 var urls2 = {
-    "users/info" : "get",
+    // "users/info" : "get",
     "users/tokens" : "get",
     "users" : "post",
     "users/device/unbind" : "post",
