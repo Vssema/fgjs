@@ -34,7 +34,9 @@
 	<input class="ipbutton" type="button" onclick="authorizationDevices()" value="查询可以授权的设备"/>
 	<br/>
 	<br/>
-	<input class="ipbutton" type="button" onclick="usersTokens()" value="获取用户的各种信息"/>
+	<input class="ipbutton" type="button" onclick="getUserInfo()" value="获取用户的各种信息"/>	
+	<input class="ipbutton" type="button" onclick="putUserInfo()" value="修改用户信息"/>	
+	<input class="ipbutton" type="button" onclick="usersTokens()" value="获取用户tokens"/>
 	<br/>
 	<br/>
 	<input class="ipbutton" type="button" onclick="usersDeviceUnbind()" value="解绑设备"/>
@@ -112,6 +114,27 @@
 
 	function usersTokens(){
 		FG.usersTokens().then(function(ret){
+			console.log("success");
+			console.log(JSON.stringify(ret));
+		},function(err){
+			console.log("err");
+			console.log(err);
+		});
+	}
+	
+	function getUserInfo(){
+		FG.getUserInfo().then(function(ret){
+			console.log("success");
+			console.log(JSON.stringify(ret));
+		},function(err){
+			console.log("err");
+			console.log(err);
+		});
+	}	
+
+	function putUserInfo(){
+		var par = {"nickname":"NULL","website":"www.baidu.com","email":"qq@baidu.com"};
+		FG.putUserInfo(par).then(function(ret){
 			console.log("success");
 			console.log(JSON.stringify(ret));
 		},function(err){

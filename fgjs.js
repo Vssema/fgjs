@@ -20,7 +20,8 @@ var _version = "";
 var _userToken = "";
 var _userID = "";
 
-var end_point = "http://www.easylink.io/";
+const end_point = "http://www.easylink.io/";
+var _urlhead = "";
 
 // console.log(md5('message'));
 
@@ -44,11 +45,12 @@ var urls1 = {
     "device/user/query" : "post",
     "device/delete" : "post",
 
-    "authorization/authorize" : "post",
+    "authorization/authorize" : "post"
 };
 
 var urls2 = {
     // "users/info" : "get",
+    // "users/info" : "put",
     "users/tokens" : "get",
     "users" : "post",
     "users/device/unbind" : "post",
@@ -56,7 +58,6 @@ var urls2 = {
     "users/login" : "post",
     "users/password/reset" : "post",
     "users/sms_verification_code" : "post",
-    "users/info" : "put",
     "users/password" : "put",
 
     "devices/get" : "get",
@@ -65,7 +66,7 @@ var urls2 = {
     // "devices/users" : "delete",//------------------------------------------------------remove one user
     
     "authorization/devices" : "get",
-    "authorization/devices/manage" : "post",
+    "authorization/devices/manage" : "post"
 };
 
 //if the method is get change data to url
@@ -82,7 +83,7 @@ var _eachData = function(data){
 var _ajax = function(method, url, data) {
     var timestamp = Date.parse(new Date());
     // console.log(timestamp);
-    // console.log(md5(_appSecret+timestamp)+","+timestamp);
+    console.log(md5(_appSecret+timestamp)+","+timestamp);
     var p = new Promise(function (resolve, reject) {
         var xhr = new XMLHttpRequest();
         if("get" == method){
@@ -144,7 +145,7 @@ FG.init = function(appId, appSecret, version) {
     }
 
     //make anonymous functions
-    var urlhead =  end_point+_version+"/";
+    _urlhead =  end_point+_version+"/";
     // console.log(urlhead);
 
     var urllist;
@@ -159,7 +160,7 @@ FG.init = function(appId, appSecret, version) {
         // console.log("for = "+fk);
         FG[fk] = (function (url, method) {
           return function (param) {
-            return _ajax(method, urlhead+url, param);
+            return _ajax(method, _urlhead+url, param);
           }
         })(k, urllist[k]);
     }
@@ -187,5 +188,18 @@ FG.login = function(param){
     
     return loginAjax;
 };
+
+FG.getUserInfo = function(){
+    var method = "get";
+    var url = "users/info";
+    var param = "";
+    return _ajax(method, _urlhead+url, param);
+}
+
+FG.putUserInfo = function(param){
+    var method = "put";
+    var url = "users/info";
+    return _ajax(method, _urlhead+url, param);
+}
 
 global.FG = FG;
