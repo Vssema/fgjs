@@ -3,7 +3,7 @@
 
 <!--
 watchify fgjs.js -o FG-0.0.1.min.js<br/>
-browserify fgjs.js -t | uglifyjs -cm >  FG-0.0.1.min.js<br/>
+browserify fgjsforuser.js -t | uglifyjs -cm >  FG-0.0.1.min.js<br/>
 -->
 <br/>
 version : 1.1.0

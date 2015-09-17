@@ -12,6 +12,16 @@
         color: green;
         font-family: '黑体';
     }
+    
+    .ipbutton {
+        width: 150px;
+        height: 25px;
+        background: #D0EEFF;
+        border: 1px solid #99D3F5;
+        border-radius: 4px;
+        color: #0D4A09;
+        margin-top: 10px;
+    }
     </style>
 </head>
 
@@ -99,7 +109,7 @@ function users() {
 function login() {
     // var par = {"login_id":"13524467545","password":"123456"};//v1
     var par = {
-        "username": "bringmehome@vip.qq.com",
+        "username": "13524467545",
         "password": "123456"
     }; //v2
     FG.login(par).then(function(ret) {
@@ -119,7 +129,7 @@ function login() {
 function usersPassword() {
     var par = {
         "username": "bringmehome@vip.qq.com",
-        "password": "1234567890",
+        "password": "123456",
         "new_password": "123456",
     };
     FG.usersPassword(par).then(function(ret) {
@@ -139,8 +149,8 @@ function usersPassword() {
 function usersPasswordReset() {
     var par = {
         "username": "bringmehome@vip.qq.com",
-        "password": "1234567890",
-        "verification_code": "106006",
+        "password": "123456",
+        "verification_code": "416190",
     };
     FG.usersPasswordReset(par).then(function(ret) {
         console.log("success");
