@@ -2,18 +2,10 @@
  * FogCloud api by Rcoke 
  * 2015-09-08
  */
-/**
-questions------------------------------------------------------
-1 (ok)login and call backe= userid
-2 remove one user
-3 (ok)unbind myself
-4 delete interfaces
-*/
 'use strict';
 var Promise = require("promise");
 var md5 = require("md5");
 var FG = exports = {};
-// const API_ROOT = "http://www.easylink.io/v1/";
 var _appId = "";
 var _appSecret = "";
 var _version = "";
@@ -21,10 +13,7 @@ var _userToken = "";
 var _userID = "";
 
 var end_point = "http://www.easylink.io/";
-var _urlheadP = "http://www.easylink.io/v1/";
 var _urlhead = "";
-
-// console.log(md5('message'));
 
 var urls1 = {
     "user/applyResetpassword": "post",
@@ -50,8 +39,6 @@ var urls1 = {
 };
 
 var urls2 = {
-    // "users/info" : "get",
-    // "users/info" : "put",
     "users/tokens": "get",
     "users": "post",
     "users/device/unbind": "post",
@@ -64,33 +51,10 @@ var urls2 = {
     "devices/get": "get",
     "devices/users": "get",
     "devices/modify": "put",
-    // "devices/users" : "delete",//------------------------------------------------------remove one user
 
     "authorization/devices": "get",
     "authorization/devices/manage": "post"
 };
-
-var urls2P = {
-    "group/create": "post",
-    "group/delete": "post",
-    "group/member/add": "post",
-    "group/member/delete": "post",
-    "group/member/import": "post",
-    "group/member/query": "post",
-    "group/query": "post",
-    "group/update": "post",
-
-    "schedule/active": "get",
-    "schedule/crontab": "get",
-    "schedule/deactive": "get",
-    "schedule/log/query": "get",
-    "schedule/query": "get",
-    "schedule/create": "post",
-    "schedule/delete": "post",
-    "schedule/log/create": "post",
-    "schedule/query": "post",
-    "schedule/update": "post"
-}
 
 //if the method is get change data to url
 var _eachData = function(data) {
@@ -98,24 +62,19 @@ var _eachData = function(data) {
     for (var key in data) {
         geturl += key + "=" + data[key] + "&";
     }
-    // console.log(geturl);
     return geturl;
 };
 
 //the function of ajax
 var _ajax = function(method, url, data) {
     var timestamp = Date.parse(new Date());
-    // console.log(timestamp);
-    // console.log(md5(_appSecret + timestamp) + "," + timestamp);
     var p = new Promise(function(resolve, reject) {
         var xhr = new XMLHttpRequest();
         if ("get" == method) {
             url = url + "?" + _eachData(data);
         } else if ("delete" == method) {
             url = url + "?" + _eachData(data);
-            //------------------------------------------------------check delete type
         }
-        // console.log(url);
         xhr.open(method, url, true);
         xhr.setRequestHeader("Content-Type", "application/json");
         xhr.setRequestHeader("X-Application-Id", _appId);
@@ -149,10 +108,8 @@ var _changeName = function(name) {
 
 
     if (finalName.indexOf("/") > 0) {
-        // console.log(finalName.indexOf("/")+ " "+finalName);
         return _changeName(finalName);
     } else {
-        // console.log(finalName.indexOf("/")+ " "+finalName);
         return finalName;
     }
 };
@@ -168,9 +125,7 @@ FG.init = function(appId, appSecret, version) {
     }
 
     //make anonymous functions
-    // _urlhead = end_point + _version + "/";
     _urlhead = end_point + _version + "/";
-    // console.log(urlhead);
 
     var urllist;
     if ("v1" == _version) {
@@ -181,21 +136,9 @@ FG.init = function(appId, appSecret, version) {
 
     for (var k in urllist) {
         var fk = _changeName(k);
-        // console.log(_urlhead + " = "+fk);
         FG[fk] = (function(url, method) {
             return function(param) {
                 return _ajax(method, _urlhead + url, param);
-            }
-        })(k, urllist[k]);
-    }
-
-    //we will use urls 2p for v1 and v2
-    for (var k in urls2P) {
-        var fk = _changeName(k);
-        // console.log(_urlheadP + " = "+fk);
-        FG[fk] = (function(url, method) {
-            return function(param) {
-                return _ajax(method, _urlheadP + url, param);
             }
         })(k, urllist[k]);
     }
@@ -208,16 +151,12 @@ FG.login = function(param) {
         loginAjax.then(function(ret) {
             _userToken = ret.token;
             _userID = ret.login_id;
-            // console.log(_userToken);
-            // console.log(_userID);
         }, function(err) {});
     } else if ("v2" == _version) {
         loginAjax = FG.usersLogin(param);
         loginAjax.then(function(ret) {
             _userToken = ret.user_token;
             _userID = ret.user_id;
-            // console.log(_userToken);
-            // console.log(_userID);
         }, function(err) {});
     }
     return loginAjax;
